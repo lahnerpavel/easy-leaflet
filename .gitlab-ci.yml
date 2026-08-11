@@ -1,0 +1,36 @@
+stages:
+  - lint
+  - test
+
+lint:php5.6:
+  stage: lint
+  image: php:5.6-cli
+  script:
+    - for f in $(find src -name "*.php"); do php -l "$f"; done
+
+test:php7.4:
+  stage: test
+  image: php:7.4-cli
+  before_script:
+    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    - composer install --no-interaction --prefer-dist
+  script:
+    - vendor/bin/phpunit
+
+test:php8.1:
+  stage: test
+  image: php:8.1-cli
+  before_script:
+    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    - composer install --no-interaction --prefer-dist
+  script:
+    - vendor/bin/phpunit
+
+test:php8.3:
+  stage: test
+  image: php:8.3-cli
+  before_script:
+    - curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+    - composer install --no-interaction --prefer-dist
+  script:
+    - vendor/bin/phpunit
