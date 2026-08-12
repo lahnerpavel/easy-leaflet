@@ -39,7 +39,7 @@
         });
 
         if (config.view.mode === 'bounds') {
-            map.fitBounds(latLngs);
+            map.fitBounds(latLngs, config.view.maxZoom ? { maxZoom: config.view.maxZoom } : undefined);
         } else {
             map.setView([config.view.center.lat, config.view.center.lng], config.view.zoom);
         }

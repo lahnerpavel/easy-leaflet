@@ -60,6 +60,27 @@ class MapTest extends TestCase
         $this->assertStringContainsString('"zoom":13', $html);
     }
 
+    public function testBoundsModeHasNoMaxZoomByDefault()
+    {
+        $html = Map::create()
+            ->addMarker(new Marker(new LatLng(50.0, 14.0)))
+            ->addMarker(new Marker(new LatLng(49.0, 16.0)))
+            ->render();
+
+        $this->assertStringContainsString('"mode":"bounds","maxZoom":null', $html);
+    }
+
+    public function testSetMaxZoomAppliesInBoundsMode()
+    {
+        $html = Map::create()
+            ->addMarker(new Marker(new LatLng(50.0, 14.0)))
+            ->addMarker(new Marker(new LatLng(49.0, 16.0)))
+            ->setMaxZoom(10)
+            ->render();
+
+        $this->assertStringContainsString('"maxZoom":10', $html);
+    }
+
     public function testEachMapGetsAUniqueContainerIdByDefault()
     {
         $htmlA = Map::create()->addMarker(new Marker(new LatLng(50.0, 14.0)))->render();

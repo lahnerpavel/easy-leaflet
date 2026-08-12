@@ -21,6 +21,9 @@ class Map
     /** @var int|null */
     private $zoom;
 
+    /** @var int|null */
+    private $boundsMaxZoom;
+
     private function __construct()
     {
         self::$instanceCounter++;
@@ -75,6 +78,20 @@ class Map
     }
 
     /**
+     * Only applies in bounds mode (2+ markers, no explicit setCenter()). Caps
+     * how far fitBounds() is allowed to zoom in — use it to keep markers that
+     * sit close together from ending up on an overly tight/zoomed-in view.
+     *
+     * @return Map
+     */
+    public function setMaxZoom($maxZoom)
+    {
+        $this->boundsMaxZoom = (int) $maxZoom;
+
+        return $this;
+    }
+
+    /**
      * @return string HTML: a container <div> plus one inline <script> that
      *                 boots the map via the shared easy-leaflet.js runtime.
      * @throws EasyLeafletException if there are no markers and no explicit setCenter().
@@ -124,6 +141,6 @@ class Map
             );
         }
 
-        return array('mode' => 'bounds');
+        return array('mode' => 'bounds', 'maxZoom' => $this->boundsMaxZoom);
     }
 }

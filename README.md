@@ -30,6 +30,15 @@ echo $map->render();
 
 `render()` prints a `<div>` and a single inline `<script>` that boots the map via the shared `easy-leaflet.js` runtime. With 2+ markers the map auto-fits its bounds; with exactly 1 marker it centers on it; with 0 markers you must call `setCenter($lat, $lng)` explicitly or `render()` throws `EasyLeafletException`.
 
+In bounds mode (2+ markers), `setMaxZoom($zoom)` caps how far Leaflet's `fitBounds()` is allowed to zoom in — useful when markers sitting close together would otherwise end up on an overly tight view:
+
+```php
+Map::create()
+    ->addMarker(new Marker(new LatLng(49.5905, 17.1978)))
+    ->addMarker(new Marker(new LatLng(49.1951, 16.6068)))
+    ->setMaxZoom(10);
+```
+
 ## Loading Leaflet itself
 
 `easy-leaflet` does not bundle Leaflet's core CSS/JS or force a specific way to load them. Include them however your project already loads assets, or use the optional helper:
