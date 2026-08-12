@@ -3,6 +3,8 @@
     "description": "Simple, universal PHP library for rendering Leaflet.js maps (PHP 5.6+)",
     "type": "library",
     "license": "MIT",
+    "keywords": ["leaflet", "map", "gis", "openstreetmap"],
+    "homepage": "https://github.com/lahnerpavel/easy-leaflet",
     "require": {
         "php": ">=5.6"
     },
