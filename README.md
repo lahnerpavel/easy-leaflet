@@ -55,11 +55,13 @@ This prints `<link>`/`<script>` tags for Leaflet's CDN build plus your copy of `
 
 ```php
 TileLayer::openStreetMap(); // default
-TileLayer::cartoVoyager();
-TileLayer::cartoLight();
-TileLayer::cartoDark();
+TileLayer::cartoVoyager($apiKey = null);
+TileLayer::cartoLight($apiKey = null);
+TileLayer::cartoDark($apiKey = null);
 TileLayer::mapyCz($apiKey);
 ```
+
+CARTO presets accept an optional API key, appended to the tile URL as `?key=…`. Without it the URL stays keyless.
 
 Pick exactly one per map with `Map::setTileLayer()`. There is no runtime layer switcher in this version.
 

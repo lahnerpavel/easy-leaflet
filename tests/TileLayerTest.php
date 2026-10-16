@@ -37,6 +37,25 @@ class TileLayerTest extends TestCase
         $this->assertStringContainsString('dark_all', $data['url']);
     }
 
+    public function testCartoPresetsWithoutApiKeyHaveNoKeyParameter()
+    {
+        $this->assertStringEndsWith('{r}.png', TileLayer::cartoVoyager()->toArray()['url']);
+        $this->assertStringEndsWith('{r}.png', TileLayer::cartoLight()->toArray()['url']);
+        $this->assertStringEndsWith('{r}.png', TileLayer::cartoDark()->toArray()['url']);
+    }
+
+    public function testCartoPresetsEncodeApiKeyIntoUrl()
+    {
+        $this->assertStringEndsWith('voyager/{z}/{x}/{y}{r}.png?key=secret%20key', TileLayer::cartoVoyager('secret key')->toArray()['url']);
+        $this->assertStringEndsWith('light_all/{z}/{x}/{y}{r}.png?key=secret%20key', TileLayer::cartoLight('secret key')->toArray()['url']);
+        $this->assertStringEndsWith('dark_all/{z}/{x}/{y}{r}.png?key=secret%20key', TileLayer::cartoDark('secret key')->toArray()['url']);
+    }
+
+    public function testCartoPresetsIgnoreEmptyApiKey()
+    {
+        $this->assertStringEndsWith('{r}.png', TileLayer::cartoLight('')->toArray()['url']);
+    }
+
     public function testMapyCzEncodesApiKeyIntoUrl()
     {
         $data = TileLayer::mapyCz('secret-key')->toArray();

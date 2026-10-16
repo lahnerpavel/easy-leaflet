@@ -30,31 +30,40 @@ class TileLayer
         );
     }
 
-    /** @return TileLayer */
-    public static function cartoVoyager()
+    /**
+     * @param string|null $apiKey
+     * @return TileLayer
+     */
+    public static function cartoVoyager($apiKey = null)
     {
         return new self(
-            'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+            'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png' . self::cartoKeyQuery($apiKey),
             '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
             array('maxZoom' => 20, 'subdomains' => 'abcd')
         );
     }
 
-    /** @return TileLayer */
-    public static function cartoLight()
+    /**
+     * @param string|null $apiKey
+     * @return TileLayer
+     */
+    public static function cartoLight($apiKey = null)
     {
         return new self(
-            'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+            'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png' . self::cartoKeyQuery($apiKey),
             '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
             array('maxZoom' => 20, 'subdomains' => 'abcd')
         );
     }
 
-    /** @return TileLayer */
-    public static function cartoDark()
+    /**
+     * @param string|null $apiKey
+     * @return TileLayer
+     */
+    public static function cartoDark($apiKey = null)
     {
         return new self(
-            'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png',
+            'https://{s}.basemaps.cartocdn.com/dark_all/{z}/{x}/{y}{r}.png' . self::cartoKeyQuery($apiKey),
             '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a> contributors &copy; <a href="https://carto.com/attributions">CARTO</a>',
             array('maxZoom' => 20, 'subdomains' => 'abcd')
         );
@@ -72,6 +81,15 @@ class TileLayer
             '&copy; <a href="https://api.mapy.cz/copyright">Mapy.cz</a>',
             array('maxZoom' => 19)
         );
+    }
+
+    /**
+     * @param string|null $apiKey
+     * @return string
+     */
+    private static function cartoKeyQuery($apiKey)
+    {
+        return $apiKey === null || $apiKey === '' ? '' : '?key=' . rawurlencode($apiKey);
     }
 
     /** @return array */
